@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>KaelChat VIP – Donde la elegancia conversa contigo</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+  <link rel="preload" href="/assets/audio/track.mp3" as="audio">
+  <link rel="stylesheet" href="/style.css"/>
+
+</head>
+<body>
+
+<div id="intro" role="presentation" aria-hidden="true">
+  <div class="intro-text">Kael&nbsp;Laurent</div>
+  <svg class="sparkle" width="120" height="120" style="top:18%;left:22%">
+    <circle cx="60" cy="60" r="2" fill="#fff9d1"/>
+  </svg>
+  <svg class="sparkle" width="90" height="90" style="bottom:16%;right:28%">
+    <circle cx="45" cy="45" r="1.6" fill="#fff4c2"/>
+  </svg>
+</div>
+
+<div class="hero">
+  <div class="container">
+    <div class="card center">
+      <h1 class="title">Donde la elegancia conversa contigo</h1>
+      <p class="subtitle">Bienvenido a <strong>KaelChat VIP</strong>, una experiencia íntima y cinematográfica.</p>
+      <p class="center" style="margin:22px 0 10px 0">
+        <a class="btn" href="/conversation.html">Entrar al mundo de Kael Laurent</a>
+      </p>
+      <p class="center" style="margin:8px 0 18px"><button class="btn btn-ghost" id="donateBtn">Donaciones</button></p>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="donateModal" aria-modal="true" role="dialog">
+  <div class="modal-card card">
+    <h3 class="modal-title">Elige tu vía de apoyo</h3>
+    <ul class="list">
+      <li><a href="#" target="_blank" rel="noopener">Stripe (próximamente)</a></li>
+      <li><a href="#" target="_blank" rel="noopener">PayPal (próximamente)</a></li>
+      <li><a href="#" target="_blank" rel="noopener">Ko‑fi (próximamente)</a></li>
+    </ul>
+    <p class="center" style="margin-top:14px"><button class="btn btn-ghost" id="closeDonate">Cerrar</button></p>
+  </div>
+</div>
+
+<footer>© 2025 Kael Laurent. Todos los derechos reservados.</footer>
+
+<script src="/signatures.js"></script>
+<script>
+// Intro hide after 2.5s
+const intro = document.getElementById('intro');
+setTimeout(()=>{ intro.style.opacity='0'; setTimeout(()=> intro.remove(), 620); }, 2500);
+
+// Donation modal
+const donateBtn = document.getElementById('donateBtn');
+const donateModal = document.getElementById('donateModal');
+const closeDonate = document.getElementById('closeDonate');
+donateBtn.addEventListener('click', ()=> donateModal.classList.add('open'));
+closeDonate.addEventListener('click', ()=> donateModal.classList.remove('open'));
+donateModal.addEventListener('click', (e)=>{ if(e.target===donateModal) donateModal.classList.remove('open'); });
+</script>
+
+<div class="audio-ctl">
+  <button id="audioToggle" aria-label="Activar música de fondo">🔊 Música</button>
+</div>
+<audio id="bgAudio" loop preload="auto" src="/assets/audio/track.mp3"></audio>
+<script>
+(function(){
+  const a = document.getElementById('bgAudio');
+  const btn = document.getElementById('audioToggle');
+  let desired = false;
+  function fade(to, dur=1200){
+    const from = a.volume;
+    const steps = 20, dt = dur/steps, dv = (to-from)/steps;
+    let i=0;
+    const id = setInterval(()=>{
+      i++; a.volume = Math.max(0, Math.min(1, a.volume + dv));
+      if(i>=steps){ clearInterval(id); a.volume = to; }
+    }, dt);
+  }
+  function tryPlay(){
+    a.volume = 0;
+    a.muted = false;
+    a.play().then(()=>{ fade(0.35, 1500); }).catch(()=>{});
+  }
+  // browsers block autoplay w/out gesture: start muted then on click enable
+  document.addEventListener('click', function once(){
+    if(!desired){ desired=true; tryPlay(); }
+    document.removeEventListener('click', once);
+  });
+  btn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    if(a.paused){ tryPlay(); btn.textContent='⏸️ Música'; }
+    else{ fade(0, 600); setTimeout(()=>{ a.pause(); btn.textContent='🔊 Música'; },650); }
+  });
+})();
+</script>
+
+</body>
+</html>

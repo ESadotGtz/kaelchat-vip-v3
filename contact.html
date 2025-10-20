@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Kael te escucha</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
+  <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+<div class="hero">
+  <div class="container">
+    <div class="card">
+      <h1 class="title">Kael te escucha</h1>
+      <form id="contactForm" action="https://formsubmit.co/kael.laurent.official@gmail.com" method="POST">
+        <input type="hidden" name="_next" value="https://kaelchat-vip-v3.vercel.app/thanks.html">
+        <input type="hidden" name="_captcha" value="false">
+        <div style="display:grid; gap:12px">
+          <label>Nombre<br><input name="Nombre" required style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(212,175,55,.45);background:rgba(0,0,0,.35);color:#f4f0e8"></label>
+          <label>Correo<br><input type="email" name="Correo" required style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(212,175,55,.45);background:rgba(0,0,0,.35);color:#f4f0e8"></label>
+          <label>Mensaje<br><textarea name="Mensaje" rows="5" required style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(212,175,55,.45);background:rgba(0,0,0,.35);color:#f4f0e8"></textarea></label>
+        </div>
+        <div class="center" style="margin-top:16px">
+          <button class="btn" type="submit">Enviar a Kael</button>
+          <a class="btn btn-ghost" href="/index.html" style="margin-left:10px">Regresar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast">Tu mensaje ha sido enviado con amor y especial cuidado. Pronto recibirás respuesta.</div>
+<footer>© 2025 Kael Laurent. Todos los derechos reservados.</footer>
+
+<script>
+const form = document.getElementById('contactForm');
+const toast = document.getElementById('toast');
+form.addEventListener('submit', function(e){
+  // show toast then proceed with normal submission (redirect handled by formsubmit)
+  toast.classList.add('show');
+  setTimeout(()=>{{ toast.classList.remove('show'); }}, 2200);
+});
+</script>
+</body>
+</html>
